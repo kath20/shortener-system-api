@@ -1,24 +1,19 @@
+import { getMongoDbInstance } from "../utils/mongo.js";
 import express from "express";
 const router = express.Router();
 
-
-
-/* POST users login. */
-router.post("/",  (req, res, next) =>{
-  
-  const userName = "admin";
-  const password = "123";
-  if (req.body.userName === userName && req.body.password === password) {
-    res.status(200).send("respond with a resource LOGIN");
+/* POST get url from shortcut. */
+router.post("/", async (req, res, next) => {
+  const db = await getMongoDbInstance();
+  const user = await db.collection("users").findOne({ user: req.body.user });
+  const password = await db
+    .collection("users")
+    .findOne({ password: req.body.password });
+  if (user && password) {
+    res.send("Correct user");
   } else {
-      res.status(401).send("invalid login");
+    res.send("Invalid user");
   }
-
 });
 
-
-
 export default router;
-
-
-
