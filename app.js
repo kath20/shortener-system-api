@@ -6,6 +6,7 @@ import loginRouter from "./routes/login.js";
 import getUrl from "./routes/getUrl.js";
 import newShortcutRouter from "./routes/newShortcut.js";
 import shortcutRedirectRouter from "./routes/shortcutRedirect.js";
+import mostVisitedRouter from "./routes/mostVisited.js";
 
 const setApplication = (app) => {
   app.use(logger("dev"));
@@ -16,6 +17,7 @@ const setApplication = (app) => {
   app.use("/getUrl", getUrl);
   app.use("/login", loginRouter);
   app.use("/newShortcut", newShortcutRouter);
+  app.use("/mostVisited", mostVisitedRouter);
 
   app.use((req, res, next) => {
     shortcutRedirectRouter(req, res, next);
