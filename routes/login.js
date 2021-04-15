@@ -1,8 +1,11 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
+
+
 /* POST users login. */
-router.post("/", function (req, res, next) {
+router.post("/",  (req, res, next) =>{
+  
   const userName = "admin";
   const password = "123";
   if (req.body.userName === userName && req.body.password === password) {
@@ -10,6 +13,12 @@ router.post("/", function (req, res, next) {
   } else {
       res.status(401).send("invalid login");
   }
+
 });
 
-module.exports = router;
+
+
+export default router;
+
+
+

@@ -1,43 +1,40 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+import createError from "http-errors";
+import express from "express";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import loginRouter from "./routes/login.js";
+import getUrl from "./routes/getUrl.js";
+import newShortcutRouter from "./routes/newShortcut.js";
+import shortcutRedirectRouter from "./routes/shortcutRedirect.js";
 
-const loginRouter = require('./routes/login');
-const getShortcutRouter = require('./routes/getShortcut');
-const newShortcutRouter = require('./routes/newShortcut');
+const setApplication = (app) => {
+  app.use(logger("dev"));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
 
-const app = express();
+  app.use("/getUrl", getUrl);
+  app.use("/login", loginRouter);
+  app.use("/newShortcut", newShortcutRouter);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+  app.use((req, res, next) => {
+    shortcutRedirectRouter(req, res, next);
+  });
+  // catch 404 and forward to error handler
+  app.use(function (req, res, next) {
+    next(createError(404));
+  });
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+  // error handler
+  app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-app.use('/getShortcut', getShortcutRouter);
-app.use('/login',loginRouter);
-app.use('/newShortcut', newShortcutRouter);
+    // render the error page
+    res.status(err.status || 500);
+    res.send(err.message);
+  });
+};
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.send(err.message);
-});
-
-module.exports = app;
+export default setApplication;
