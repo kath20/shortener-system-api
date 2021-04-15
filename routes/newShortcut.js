@@ -20,7 +20,7 @@ router.post("/", async (req, res, next) => {
         await db.collection("websites").insertOne({
           url: req.body.url,
           visits: 1,
-          shortcode: url,
+          shortcode: url.substr(16),
         });
         res.status(200).send("Guardamos tus datos");
       });
