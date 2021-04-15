@@ -2,8 +2,9 @@
   "name": "shortener-system-api",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "nodemon node ./bin/www",
+    "start": "nodemon babel-node src/server.js",
     "test": "mocha"
   },
   "dependencies": {
@@ -11,9 +12,11 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
-    "mongoose": "^5.12.3",
+    "mongodb": "^3.6.6",
     "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11"
+    "node-url-shortener": "^1.1.11",
+    "pug": "2.0.0-beta11",
+    "url-exist": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
