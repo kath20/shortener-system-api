@@ -11,7 +11,7 @@ router.post('/', async(req, res, next)=> {
 if(shortcodeExist){
   res.send(shortcodeExist.url);
 }else{
-  res.send('Este shortcut no existe');
+  res.send('This shortcut does not exist');
 }
 });
 

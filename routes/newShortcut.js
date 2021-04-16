@@ -23,13 +23,13 @@ router.post("/", async (req, res, next) => {
           visits: 1,
           shortcode,
         });
-        res.status(200).send(`Shortcode generado: ${shortcode}` );
+        res.status(200).send(`Generated shortcode: ${shortcode}` );
       });
     } else {
-      res.status(503).send("Url ya existe");
+      res.status(503).send("Url already exist.");
     }
   } else {
-    res.status(503).send("Url no valido. Ej: https://google.com");
+    res.status(503).send("Invalid url. Ex: https://google.com");
   }
 });
 
