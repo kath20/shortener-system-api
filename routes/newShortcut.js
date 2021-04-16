@@ -8,7 +8,7 @@ const router = express.Router();
 /* POST shortcut creation. */
 router.post("/", async (req, res, next) => {
   const db = await getMongoDbInstance();
-  const link=req.body.data.url;
+  const link=req.body?.data?.url;
   const urlValid = await urlExist(link);
   if (urlValid) {
     const urlExistOnDb = await db

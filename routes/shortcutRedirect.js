@@ -10,14 +10,11 @@ const shortcutRedirect = async (req, res, next) => {
     .findOne({ shortcode: code });
 
   if (shortcodeExist) {
-    let visits = await db.collection("websites").findOne({ shortcode: code });
-    
-    let newVisit = parseInt(visits.visits) + 1;
+    const visits = await db.collection("websites").findOne({ shortcode: code });
+    const newVisit = parseInt(visits.visits) + 1;
     const websiteCode = { shortcode: code };
     const updateVsits = { $set: { visits: newVisit } };
-    let totalVisits = await db
-      .collection("websites")
-      .updateOne(websiteCode, updateVsits);
+    await db.collection("websites").updateOne(websiteCode, updateVsits);
     const redirectUrl = shortcodeExist.url;
     res.redirect(redirectUrl);
   } else {
