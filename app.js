@@ -7,12 +7,14 @@ import getUrl from "./routes/getUrl.js";
 import newShortcutRouter from "./routes/newShortcut.js";
 import shortcutRedirectRouter from "./routes/shortcutRedirect.js";
 import mostVisitedRouter from "./routes/mostVisited.js";
+import cors from "cors";
 
 const setApplication = (app) => {
   app.use(logger("dev"));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
+  app.use(cors());
 
   app.use("/getUrl", getUrl);
   app.use("/login", loginRouter);

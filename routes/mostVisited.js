@@ -2,8 +2,8 @@ import { getMongoDbInstance } from "../utils/mongo.js";
 import express from "express";
 const router = express.Router();
 
-/* POST most visited websites. */
-router.post("/", async (req, res, next) => {
+/* GET most visited websites. */
+router.get("/", async (req, res, next) => {
   const db = await getMongoDbInstance();
   await db
     .collection("websites")
