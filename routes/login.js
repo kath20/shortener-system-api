@@ -9,11 +9,11 @@ router.post("/", async (req, res, next) => {
   const password = await db
     .collection("users")
     .findOne({ password: req.body.data.password });
-  if (user && password) {
-    res.send("Correct user");
-  } else {
-    res.send("Invalid user");
-  }
+      if (user && password) {
+        res.send(true);
+      } else {
+        res.send(false);
+      }
 });
 
 export default router;
